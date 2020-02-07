@@ -30,7 +30,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         primaryStage.setTitle("Aplicación de Busqueda");
-        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.setScene(new Scene(root, 300, 300));
         primaryStage.show();
         Scene scene = primaryStage.getScene();
     }
