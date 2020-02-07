@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
-
+   <children>
+      <TreeView id="treeView" layoutX="289.0" layoutY="14.0" prefHeight="375.0" prefWidth="299.0" />
+      <ImageView fitHeight="360.0" fitWidth="256.0" layoutX="22.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
 </AnchorPane>
