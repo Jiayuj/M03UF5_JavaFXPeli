@@ -27,12 +27,11 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
-        primaryStage.setTitle("Aplicación de Busqueda");
-        primaryStage.setScene(new Scene(root, 300, 300));
-        primaryStage.show();
-        Scene scene = primaryStage.getScene();
+        stage.setTitle("App");
+        stage.setScene(new Scene(root, 500, 510));
+        stage.show();
     }
 
     public static void main(String[] args) {
