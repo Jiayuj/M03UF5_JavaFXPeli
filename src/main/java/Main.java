@@ -1,9 +1,14 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.*;
 
 
 import javax.xml.bind.JAXB;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Comparator;
@@ -22,14 +27,24 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
-
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+        primaryStage.setTitle("Aplicación de Busqueda");
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
+        Scene scene = primaryStage.getScene();
     }
 
     public static void main(String[] args) {
+        launch(args);
+        long contador = 0;
+
         try {
             URL url = new URL(filmURL);
             films= JAXB.unmarshal(url, Films.class).filmList;
+
+            contador = films.stream().count();
+            System.out.println(contador);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -9,5 +9,8 @@
         <module name="M03UF5_JavaFXPeli" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="M03UF5_JavaFXPeli" target="13" />
+    </bytecodeTargetLevel>
   </component>
 </project>
