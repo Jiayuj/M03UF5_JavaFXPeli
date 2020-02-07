@@ -37,14 +37,14 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        long cont = 0;
+        long contador = 0;
 
         try {
             URL url = new URL(filmURL);
             films= JAXB.unmarshal(url, Films.class).filmList;
 
-            cont = films.stream().count();
-            System.out.println(cont);
+            contador = films.stream().count();
+            System.out.println(contador);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
