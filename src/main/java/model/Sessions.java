@@ -11,12 +11,12 @@ import java.util.List;
 public class Sessions{
     @XmlElement(name = "SESSIONS")
     public
-    List<Film> filmList;
+    List<Session> sessionList;
 
     @Override
     public String toString() {
-        return "Films{" +
-                "filmList=" + filmList +
+        return "Sessions{" +
+                "sessionList=" + sessionList +
                 '}';
     }
 }
