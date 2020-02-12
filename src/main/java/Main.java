@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +29,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         stage.setTitle("App");
         stage.setScene(new Scene(root, 500, 510));
@@ -38,16 +41,6 @@ public class Main extends Application {
         launch(args);
         long contador = 0;
 
-        try {
-            URL url = new URL(filmURL);
-            films= JAXB.unmarshal(url, Films.class).filmList;
-
-            contador = films.stream().count();
-            System.out.println(contador);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
     }
 }

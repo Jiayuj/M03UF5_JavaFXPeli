@@ -1,8 +1,10 @@
 /home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Ciclo.java
 /home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Cine.java
 /home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Film.java
-/home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/control/SampleController.java
 /home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Films.java
+/home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/control/SampleController.java
 /home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/Main.java
-/home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Session.java
 /home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Cines.java
+/home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Session.java
+/home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Sessions.java
+/home/dam2a/IdeaProjects/M03UF5_JavaFXPeli/src/main/java/model/Ciclos.java
