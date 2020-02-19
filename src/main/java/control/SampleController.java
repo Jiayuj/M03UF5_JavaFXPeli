@@ -4,22 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import model.Cine;
+import model.Cines;
 import model.Film;
 import model.Films;
 
-import javax.imageio.ImageIO;
-import javax.swing.text.Element;
-
 import javax.xml.bind.JAXB;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -29,49 +24,68 @@ public class SampleController implements Initializable {
 
     static final String filmURL ="http://gencat.cat/llengua/cinema/provacin.xml";
     static List<Film> films;
+    static final String cineURL ="http://gencat.cat/llengua/cinema/cinemes.xml";
+    static List<Cine> cines;
+
 
     private int i;
-    ObservableList<String> names = FXCollections.observableArrayList();
+    ObservableList<String> nombrePeliculas = FXCollections.observableArrayList(), nombreCines = FXCollections.observableArrayList();
 
     @FXML
-    ListView<String> lsvLlista01;
+    ListView<String> peliculasLista, cinesLista;
+
     @FXML
-    Pane paneV;
+    Pane panePeliculas;
+
+    @FXML
+    Text direccion = new Text(), localidad = new Text(), comarca = new Text(), provincia = new Text();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            URL url1 = new URL(filmURL);
-            films= JAXB.unmarshal(url1, Films.class).filmList;
+            URL urlFilms = new URL(filmURL), urlCines = new URL(cineURL);
+            films = JAXB.unmarshal(urlFilms, Films.class).filmList;
+            cines = JAXB.unmarshal(urlCines, Cines.class).cineList;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
         i=0;
         for (Film f : films) {
-            names.add(f.getTitol());
+            nombrePeliculas.add(f.getTitol());
+        }
+        for (Cine c: cines) {
+            nombreCines.add(c.getCinenom());
         }
 
-        lsvLlista01.setItems(names);
-
+        peliculasLista.setItems(nombrePeliculas);
+        cinesLista.setItems(nombreCines);
 
 
     }
 
     @FXML public void listPeliClick(MouseEvent arg0) {
-        String s = lsvLlista01.getSelectionModel().getSelectedItem();
+        String s = peliculasLista.getSelectionModel().getSelectedItem();
         for (Film f : films) {
             if (f.getTitol().equals(s)) s=f.getCartell();
         }
-        paneV.getChildren().clear();
+        panePeliculas.getChildren().clear();
         ImageView imagenPeli = new ImageView("http://gencat.cat/llengua/cinema/"+s);
-        imagenPeli.setFitHeight(180);
-        imagenPeli.setFitWidth(110);
-        paneV.getChildren().add(imagenPeli);
-
-
+        imagenPeli.setFitHeight(512);
+        imagenPeli.setFitWidth(384);
+        panePeliculas.getChildren().add(imagenPeli);
     }
 
-
+    public void listCineClick(MouseEvent mouseEvent) {
+        String s = cinesLista.getSelectionModel().getSelectedItem();
+        for (Cine c : cines) {
+            if (c.getCinenom().equals(s)) {
+                direccion.setText("Dirección:    " + c.getCineadreca());
+                localidad.setText("Localidad:    " + c.getLocalitat());
+                comarca.setText("Comarca:     " + c.getComarca());
+                provincia.setText("Provincia:     " + c.getProvincia());
+            }
+        }
+    }
 }
