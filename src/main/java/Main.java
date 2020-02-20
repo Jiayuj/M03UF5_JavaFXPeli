@@ -31,8 +31,6 @@ public class Main extends Application {
     static final String sessionURL ="http://www.gencat.cat/llengua/cinema/film_sessions.xml";
     static List<Session> sessions;
 
-    private TableView table = new TableView();
-
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -41,27 +39,13 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
 
         stage.setTitle("App");
-
-        table.setEditable(true);
-
-        TableColumn cineIdCol = new TableColumn("Cine_ID");
-        TableColumn cineCol = new TableColumn("Cine");
-        TableColumn cineAdrecaCol = new TableColumn("Cine_Adreça");
-        TableColumn localitatCol = new TableColumn("Cine_Adreça");
-        TableColumn comarcaCol = new TableColumn("Cine_Adreça");
-        TableColumn provinciaCol = new TableColumn("Cine_Adreça");
-
-
-        table.getColumns().addAll(cineIdCol, cineCol, cineAdrecaCol, localitatCol, comarcaCol, provinciaCol);
-
         stage.setScene(new Scene(root, 500, 510));
         stage.show();
+
     }
 
     public static void main(String[] args) {
         launch(args);
-        long contador = 0;
-
 
     }
 }
