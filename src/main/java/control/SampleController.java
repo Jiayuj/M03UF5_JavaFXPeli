@@ -19,7 +19,6 @@ import model.Film;
 import model.Films;
 
 import javax.xml.bind.JAXB;
-import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -35,7 +34,7 @@ public class SampleController implements Initializable {
 
 
     private int i;
-    ObservableList<String> nombrePeliculas = FXCollections.observableArrayList(), nombreCines = FXCollections.observableArrayList();
+    ObservableList<String> nombrePelicula = FXCollections.observableArrayList(), nombreCines = FXCollections.observableArrayList();
 
     @FXML
     ListView<String> peliculasLista, cinesLista;
@@ -66,7 +65,7 @@ public class SampleController implements Initializable {
 
         i=0;
         for (Film f : films) {
-            nombrePeliculas.add(f.getTitol());
+            nombrePelicula.add(f.getTitol());
         }
         for (Cine c: cines) {
             nombreCines.add(c.getCinenom());
@@ -74,7 +73,7 @@ public class SampleController implements Initializable {
 
         pane.setVisible(false);
         tableView = new TableView<>();
-        peliculasLista.setItems(nombrePeliculas);
+        peliculasLista.setItems(nombrePelicula);
         cinesLista.setItems(nombreCines);
 
 
@@ -103,7 +102,7 @@ public class SampleController implements Initializable {
         TableColumn firstNameCol = new TableColumn("First Name");
 
 
-        tableView.setItems(nombrePeliculas);
+        tableView.setItems(nombrePelicula);
 
 
         tableView.getColumns().addAll(firstNameCol);
