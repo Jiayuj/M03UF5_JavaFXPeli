@@ -7,6 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
+<?import javafx.scene.text.*?>
+
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
    <children>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -14,6 +17,8 @@
           <Tab text="Peli">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                         <ListView fx:id="peliculasLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listPeliClick" prefHeight="281.0" prefWidth="309.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                         <Pane fx:id="panePeliculas" layoutX="334.0" layoutY="25.0" prefHeight="200.0" prefWidth="224.0" />
                      <children>
                          <ListView fx:id="lsvLlista01" layoutX="200.0" layoutY="100.0" onMouseClicked="#listPeliClick" prefHeight="301.0" prefWidth="194.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
                         <Text fx:id="titol" layoutX="389.0" layoutY="40.0" />
@@ -34,21 +39,15 @@
             </content>
           </Tab>
           <Tab text="cine">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView editable="true" layoutX="12.0" layoutY="16.0" prefHeight="339.0" prefWidth="574.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="Cine_ID" />
-                            <TableColumn prefWidth="91.0" text="Cine" />
-                              <TableColumn prefWidth="148.0" text="Cine_Adreça" />
-                              <TableColumn prefWidth="87.0" text="Localitat" />
-                              <TableColumn prefWidth="93.0" text="Comarca" />
-                              <TableColumn prefWidth="81.0" text="Provincia" />
-                          </columns>
-                        </TableView>
-                     </children></AnchorPane>
-            </content>
+              <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <ListView fx:id="cinesLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listCineClick" prefHeight="281.0" prefWidth="309.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                      <Text fx:id="direccion" layoutX="366.0" layoutY="50.0" />
+                      <Text fx:id="localidad" layoutX="366.0" layoutY="90.0" />
+                      <Text fx:id="comarca" layoutX="366.0" layoutY="110.0" />
+                      <Text fx:id="provincia" layoutX="366.0" layoutY="130.0" />
+                  </AnchorPane>
+              </content>
           </Tab>
         </tabs>
       </TabPane>

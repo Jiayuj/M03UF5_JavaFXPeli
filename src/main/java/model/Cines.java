@@ -10,6 +10,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Cines {
     @XmlElement(name = "CINEMES")
+    public
     List<Cine> cineList;
     @Override
     public String toString() {
