@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
    <children>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -23,10 +24,11 @@
                               <Rectangle2D />
                            </viewport>
                         </ImageView>
-                        <Button fx:id="projeccions" layoutX="239.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
-                        <Pane fx:id="projeccionPane" layoutX="73.0" layoutY="97.0" prefHeight="221.0" prefWidth="442.0">
+                        <Button fx:id="projeccionsButton" layoutX="239.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
+                        <Pane fx:id="projeccionPane" layoutX="73.0" layoutY="97.0" prefHeight="225.0" >
                            <children>
-                              <TableView fx:id="projeccionTable" layoutX="20.0" layoutY="11.0" prefHeight="200.0" prefWidth="378.0" />
+                              <TableView fx:id="projeccionTable" layoutX="20.0" layoutY="11.0" prefHeight="200.0" />
+                              <Button fx:id="closs" layoutX="419.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#clossclick" text="Button" />
                            </children>
                         </Pane>
                      </children>

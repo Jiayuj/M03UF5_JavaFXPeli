@@ -20,6 +20,10 @@ import model.*;
 import javax.xml.bind.JAXB;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -45,11 +49,14 @@ public class SampleController implements Initializable {
     @FXML
     Text direccion,localidad,comarca,provincia;
     @FXML
-    Button projeccions;
+    Button projeccionsButton, closs;
     @FXML
     Pane projeccionPane;
     @FXML
     TableView projeccionTable;
+
+
+    int idFilms;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,6 +84,7 @@ public class SampleController implements Initializable {
         cinesLista.setItems(nombreCines);
 
         projeccionPane.setVisible(false);
+        projeccionsButton.setVisible(false);
 
 
     }
@@ -92,15 +100,21 @@ public class SampleController implements Initializable {
             titol.setText("Titol: " + f.getTitol());
             original.setText("Títol original: " + f.getOriginal());
             direccio.setText("Director: " + f.getDireccion());
+            idFilms = f.getIdfilm();
         }
-
+        projeccionsButton.setVisible(true);
     }
 
     @FXML
     public void projeccionsClick(MouseEvent arg0) {
         projeccionPane.setVisible(true);
-        setprojeccionTable(titol.getText());
+        setprojeccionTable();
 
+    }
+    @FXML
+    public void clossclick(MouseEvent arg0) {
+        projeccionPane.setVisible(false);
+        projeccionDataTable.clear();
     }
 
     @FXML
@@ -117,12 +131,13 @@ public class SampleController implements Initializable {
     }
 
 
-    private void setprojeccionTable(String s) {
+    private void setprojeccionTable() {
         TableColumn columna1 = new TableColumn("Titol");
         TableColumn columna2 = new TableColumn("Date");
         TableColumn columna3 = new TableColumn("Cinema");
-
-
+        TableColumn columna4 = new TableColumn("localitat");
+        TableColumn columna5 = new TableColumn("comarca");
+        TableColumn columna6 = new TableColumn("versio");
 
         try {
             URL urlSession = new URL(sessionURL);
@@ -131,16 +146,24 @@ public class SampleController implements Initializable {
             e.printStackTrace();
         }
 
+        for (Session session : sessions.stream().filter(session -> session.getIdfilm() == idFilms).collect(Collectors.toList())){
+            try {
+                Date  date1 = new SimpleDateFormat("dd/MM/yyyy").parse(session.getSes_data());
+                if (date1.after(Calendar.getInstance().getTime()))
+                    projeccionDataTable.add(new ProjeccionData(session.getTitol(),session.getSes_data(),session.getCinenom(),session.getLocalitat(),session.getComarca(),session.getVer()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         columna1.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("titol"));
+        columna2.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("data"));
+        columna3.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("cinema"));
+        columna4.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("localitat"));
+        columna5.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("comarca"));
+        columna6.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("versio"));
 
-
-        projeccionDataTable.add(new ProjeccionData(titol.getText(),"1","1","1","1","1"));
-
-
-        projeccionTable.getColumns().addAll(columna1);
+        projeccionTable.getColumns().addAll(columna1,columna2,columna3,columna4,columna5,columna6);
         projeccionTable.setItems(projeccionDataTable);
-
-
-
     }
 }

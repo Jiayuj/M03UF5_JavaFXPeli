@@ -65,4 +65,6 @@ public class ProjeccionData {
     public void setVersio(String versio) {
         this.versio = versio;
     }
+
+
 }
