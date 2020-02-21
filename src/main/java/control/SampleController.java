@@ -32,8 +32,6 @@ public class SampleController implements Initializable {
     static final String cineURL ="http://gencat.cat/llengua/cinema/cinemes.xml";
     static List<Cine> cines;
 
-
-    private int i;
     ObservableList<String> nombrePelicula = FXCollections.observableArrayList(), nombreCines = FXCollections.observableArrayList();
 
     @FXML
@@ -46,11 +44,8 @@ public class SampleController implements Initializable {
     @FXML
     Pane pane;
 
-    TableView tableView;
-    Pane panePeliculas;
-
     @FXML
-    Text direccion = new Text(), localidad = new Text(), comarca = new Text(), provincia = new Text();
+    Text direccion,localidad,comarca,provincia;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,7 +58,6 @@ public class SampleController implements Initializable {
             e.printStackTrace();
         }
 
-        i=0;
         for (Film f : films) {
             nombrePelicula.add(f.getTitol());
         }
@@ -72,7 +66,6 @@ public class SampleController implements Initializable {
         }
 
         pane.setVisible(false);
-        tableView = new TableView<>();
         peliculasLista.setItems(nombrePelicula);
         cinesLista.setItems(nombreCines);
 
@@ -96,22 +89,6 @@ public class SampleController implements Initializable {
         pane.getChildren().clear();
         pane.getChildren().add(imagenPeli);
         pane.getChildren().add(titol);
-
-        tableView.setEditable(true);
-
-        TableColumn firstNameCol = new TableColumn("First Name");
-
-
-        tableView.setItems(nombrePelicula);
-
-
-        tableView.getColumns().addAll(firstNameCol);
-
-
-
-        pane.getChildren().add(tableView);
-
-
 
 
     }
