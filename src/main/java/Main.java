@@ -22,14 +22,9 @@ import java.util.List;
 
 public class Main extends Application {
 
-    static final String CineURL ="http://gencat.cat/llengua/cinema/cinemes.xml";
-    static List<Cine> cines;
-    static final String filmURL ="http://gencat.cat/llengua/cinema/provacin.xml";
-    static List<Film> films;
     static final String cicloURL ="http://gencat.cat/llengua/cinema/cicles.xml";
     static List<Ciclo> ciclos;
-    static final String sessionURL ="http://www.gencat.cat/llengua/cinema/film_sessions.xml";
-    static List<Session> sessions;
+
 
 
     @Override

@@ -4,19 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-import model.Cine;
-import model.Cines;
-import model.Film;
-import model.Films;
+import model.*;
 
 import javax.xml.bind.JAXB;
 import java.net.MalformedURLException;
@@ -27,28 +26,36 @@ import java.util.stream.Collectors;
 
 public class SampleController implements Initializable {
 
-    static final String filmURL ="http://gencat.cat/llengua/cinema/provacin.xml";
-    static List<Film> films;
-    static final String cineURL ="http://gencat.cat/llengua/cinema/cinemes.xml";
-    static List<Cine> cines;
+    final String filmURL ="http://gencat.cat/llengua/cinema/provacin.xml";
+    List<Film> films;
+    final String cineURL ="http://gencat.cat/llengua/cinema/cinemes.xml";
+    List<Cine> cines;
+    final String sessionURL ="http://www.gencat.cat/llengua/cinema/film_sessions.xml";
+    List<Session> sessions;
 
-    ObservableList<String> nombrePelicula = FXCollections.observableArrayList(), nombreCines = FXCollections.observableArrayList();
+    ObservableList<String> nombrePelicula, nombreCines;
+    ObservableList<ProjeccionData> projeccionDataTable;
 
     @FXML
     ListView<String> peliculasLista, cinesLista;
-
     @FXML
     ImageView imagenPeli;
     @FXML
     Text titol,original,direccio;
     @FXML
-    Pane pane;
-
-    @FXML
     Text direccion,localidad,comarca,provincia;
+    @FXML
+    Button projeccions;
+    @FXML
+    Pane projeccionPane;
+    @FXML
+    TableView projeccionTable;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        nombrePelicula  = FXCollections.observableArrayList();
+        nombreCines  = FXCollections.observableArrayList();
+        projeccionDataTable  = FXCollections.observableArrayList();
 
         try {
             URL urlFilms = new URL(filmURL), urlCines = new URL(cineURL);
@@ -65,9 +72,11 @@ public class SampleController implements Initializable {
             nombreCines.add(c.getCinenom());
         }
 
-        pane.setVisible(false);
+
         peliculasLista.setItems(nombrePelicula);
         cinesLista.setItems(nombreCines);
+
+        projeccionPane.setVisible(false);
 
 
     }
@@ -85,14 +94,16 @@ public class SampleController implements Initializable {
             direccio.setText("Director: " + f.getDireccion());
         }
 
-        pane.setVisible(true);
-        pane.getChildren().clear();
-        pane.getChildren().add(imagenPeli);
-        pane.getChildren().add(titol);
+    }
 
+    @FXML
+    public void projeccionsClick(MouseEvent arg0) {
+        projeccionPane.setVisible(true);
+        setprojeccionTable(titol.getText());
 
     }
 
+    @FXML
     public void listCineClick(MouseEvent mouseEvent) {
         String s = cinesLista.getSelectionModel().getSelectedItem();
         for (Cine c : cines) {
@@ -103,5 +114,33 @@ public class SampleController implements Initializable {
                 provincia.setText("Provincia:     " + c.getProvincia());
             }
         }
+    }
+
+
+    private void setprojeccionTable(String s) {
+        TableColumn columna1 = new TableColumn("Titol");
+        TableColumn columna2 = new TableColumn("Date");
+        TableColumn columna3 = new TableColumn("Cinema");
+
+
+
+        try {
+            URL urlSession = new URL(sessionURL);
+            sessions = JAXB.unmarshal(urlSession,Sessions.class).sessionList;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        columna1.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("titol"));
+
+
+        projeccionDataTable.add(new ProjeccionData(titol.getText(),"1","1","1","1","1"));
+
+
+        projeccionTable.getColumns().addAll(columna1);
+        projeccionTable.setItems(projeccionDataTable);
+
+
+
     }
 }
