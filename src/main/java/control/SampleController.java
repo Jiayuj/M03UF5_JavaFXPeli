@@ -32,6 +32,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SampleController implements Initializable {
+    @FXML
+    TabPane tabPane;
 
     private List<Film> films;
     private List<Cine> cines;
@@ -49,13 +51,15 @@ public class SampleController implements Initializable {
     @FXML
     private Text direccion,localidad,comarca,provincia;
     @FXML
-    private Text nombreCiclo, infoCiclo;
+    private Text nombreCiclo, infoCiclo,webCiclo;
     @FXML
-    private Button projeccionsButton;
+    private Button projeccionsButtonPeli, projeccionsButtonCine,projeccionsButtonCiclo;
     @FXML
     private PieChart estadisticasAño;
 
-    static int idFilms;
+    static int id;
+    static String tapclick;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nombrePelicula  = FXCollections.observableArrayList();
@@ -93,7 +97,10 @@ public class SampleController implements Initializable {
         estadisticasAño.setData(dataCharts);
         estadisticasAño.setLegendSide(Side.LEFT);
 
-        projeccionsButton.setVisible(false);
+        projeccionsButtonPeli.setVisible(false);
+        projeccionsButtonCine.setVisible(false);
+        projeccionsButtonCiclo.setVisible(false);
+
     }
 
     @FXML
@@ -107,14 +114,16 @@ public class SampleController implements Initializable {
             titol.setText("Titol: " + f.getTitol());
             original.setText("Títol original: " + f.getOriginal());
             direccio.setText("Director: " + f.getDireccion());
-            idFilms= f.getIdfilm();
+            id= f.getIdfilm();
+            System.out.println("1");
         }
-        projeccionsButton.setVisible(true);
+        projeccionsButtonPeli.setVisible(true);
     }
 
     @FXML
     public void projeccionsClick(MouseEvent arg0) {
         try {
+            tapclick = tabPane.getSelectionModel().getSelectedItem().getText();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("projeccions.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) arg0.getSource()).getScene().getWindow();
@@ -128,26 +137,33 @@ public class SampleController implements Initializable {
     @FXML
     public void listCineClick(MouseEvent mouseEvent) {
         String s = cinesLista.getSelectionModel().getSelectedItem();
-        for (Cine c : cines) {
-            if (c.getCinenom().equals(s)) {
-                direccion.setText("Dirección:    " + c.getCineadreca());
-                localidad.setText("Localidad:    " + c.getLocalitat());
-                comarca.setText("Comarca:     " + c.getComarca());
-                provincia.setText("Provincia:     " + c.getProvincia());
-            }
+        for (Cine c : cines.stream().filter(l -> l.getCinenom().equals(s)).collect(Collectors.toList())) {
+            direccion.setText("Dirección:    " + c.getCineadreca());
+            localidad.setText("Localidad:    " + c.getLocalitat());
+            comarca.setText("Comarca:     " + c.getComarca());
+            provincia.setText("Provincia:     " + c.getProvincia());
+            id= c.getCineid();
         }
+        projeccionsButtonCine.setVisible(true);
     }
     @FXML
     public void listCicloClick(MouseEvent mouseEvent) {
         String s = ciclosLista.getSelectionModel().getSelectedItem();
-        for (Ciclo c : ciclos) {
-            if (c.getCiclenom().equals(s)) {
-                Image image = new Image("http://gencat.cat/llengua/cinema/"+c.getImgcicle());
-                imagenCiclo.setImage(image);
-                nombreCiclo.setText("Nombre: " + c.getCiclenom());
-                infoCiclo.setText("Información: " + c.getCicleinfo());
+        for (Ciclo c : ciclos.stream().filter(l -> l.getCiclenom().equals(s)).collect(Collectors.toList())) {
+            Image image = new Image("http://gencat.cat/llengua/cinema/"+c.getImgcicle());
+            imagenCiclo.setImage(image);
+            nombreCiclo.setText("Nombre: " + c.getCiclenom());
+            infoCiclo.setText("Información: " + c.getCicleinfo());
+            id= c.getCicleid();
+            if (c.getWeb() == null) {
+                webCiclo.setText("");
+                projeccionsButtonCiclo.setVisible(true);
+            } else {
+                webCiclo.setText("Web: " + c.getWeb());
+                projeccionsButtonCiclo.setVisible(false);
             }
         }
+
     }
 
     public void loadDataPieChart() {

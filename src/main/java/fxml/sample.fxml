@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.chart.PieChart?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
    <children>
-       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+       <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <tabs>
                <Tab text="Peli">
                    <content>
@@ -24,12 +24,12 @@
                                        <Rectangle2D />
                                    </viewport>
                                </ImageView>
-                               <Button fx:id="projeccionsButton" layoutX="239.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
+                               <Button fx:id="projeccionsButtonPeli" layoutX="239.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
                            </children>
                        </AnchorPane>
                    </content>
                </Tab>
-               <Tab text="cine">
+               <Tab text="Cine">
                    <content>
                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -38,11 +38,12 @@
                                <Text fx:id="localidad" layoutX="366.0" layoutY="90.0" />
                                <Text fx:id="comarca" layoutX="366.0" layoutY="110.0" />
                                <Text fx:id="provincia" layoutX="366.0" layoutY="130.0" />
+                               <Button fx:id="projeccionsButtonCine" layoutX="352.0" layoutY="259.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
                            </children>
                        </AnchorPane>
                    </content>
                </Tab>
-               <Tab text="ciclos">
+               <Tab text="Ciclos">
                    <content>
                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -54,13 +55,15 @@
                                        <Rectangle2D />
                                    </viewport>
                                </ImageView>
+                               <Text fx:id="webCiclo" layoutX="31.0" layoutY="341.0" />
+                               <Button fx:id="projeccionsButtonCiclo" layoutX="31.0" layoutY="326.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
                            </children>
                        </AnchorPane>
                    </content>
                </Tab>
                <Tab text="estadisticas">
                    <content>
-                       <PieChart fx:id="estadisticasAño" title="Año Peliculas"/>
+                       <PieChart fx:id="estadisticasAño" title="Año Peliculas" />
                    </content>
                </Tab>
            </tabs>

@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 public class ProjeccionsController extends SampleController {
 
     private List<Session> sessions;
+    List<Session> sessionsfiter;
 
     private ObservableList<ProjeccionData> projeccionDataTable;
 
@@ -77,8 +78,21 @@ public class ProjeccionsController extends SampleController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        switch (tapclick){
+            case "Cine":
+                sessionsfiter = sessions.stream().filter(session -> session.getCineid() == id).collect(Collectors.toList());
+                break;
+            case "Peli":
+                 sessionsfiter = sessions.stream().filter(session -> session.getIdfilm() == id).collect(Collectors.toList());
+                break;
+            case "Ciclos":
+                sessionsfiter = sessions.stream().filter(session -> session.getCicleid() == id).collect(Collectors.toList());
+                break;
+            default:
+                break;
+        }
 
-        for (Session session : sessions.stream().filter(session -> session.getIdfilm() == idFilms).collect(Collectors.toList())){
+        for (Session session : sessionsfiter){
             try {
                 Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(session.getSes_data());
                 if (date1.after(Calendar.getInstance().getTime()))
@@ -93,7 +107,6 @@ public class ProjeccionsController extends SampleController {
 
     @FXML
     public void back(MouseEvent mouseEvent) {
-
         try {
 
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));

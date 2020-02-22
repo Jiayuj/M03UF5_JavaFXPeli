@@ -6,12 +6,12 @@ import javax.xml.bind.annotation.XmlElement;
 public class Ciclo {
 
     int cicleid;
-    String ciclenom, cicleinfo, imgcicle;
+    String ciclenom, cicleinfo, imgcicle,web;
 
     public int getCicleid() {
         return cicleid;
     }
-    @XmlElement(name = "CINEID")
+    @XmlElement(name = "CICLEID")
     public void setCicleid(int cicleid) {
         this.cicleid = cicleid;
     }
@@ -38,6 +38,14 @@ public class Ciclo {
     @XmlElement(name = "IMGCICLE")
     public void setImgcicle(String imgcicle) {
         this.imgcicle = imgcicle;
+    }
+
+    public String getWeb() {
+        return web;
+    }
+    @XmlElement(name = "WEB")
+    public void setWeb(String web) {
+        this.web = web;
     }
 
     @Override
