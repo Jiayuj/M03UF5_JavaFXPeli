@@ -5,9 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -26,42 +28,48 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SampleController implements Initializable {
 
-    private final String filmURL ="http://gencat.cat/llengua/cinema/provacin.xml";
     private List<Film> films;
-    private final String cineURL ="http://gencat.cat/llengua/cinema/cinemes.xml";
     private List<Cine> cines;
+    private List<Ciclo> ciclos;
 
-    private ObservableList<String> nombrePelicula, nombreCines;
+    private ObservableList<String> nombrePelicula, nombreCines,nombreCiclos;
+    private ObservableList<PieChart.Data> dataCharts;
 
     @FXML
-    private ListView<String> peliculasLista, cinesLista;
+    private ListView<String> peliculasLista, cinesLista,ciclosLista;
     @FXML
-    private ImageView imagenPeli;
+    private ImageView imagenPeli,imagenCiclo;
     @FXML
     private Text titol,original,direccio;
     @FXML
     private Text direccion,localidad,comarca,provincia;
     @FXML
+    private Text nombreCiclo, infoCiclo;
+    @FXML
     private Button projeccionsButton;
+    @FXML
+    private PieChart estadisticasAño;
 
     static int idFilms;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nombrePelicula  = FXCollections.observableArrayList();
         nombreCines  = FXCollections.observableArrayList();
+        nombreCiclos  = FXCollections.observableArrayList();
 
         try {
-            URL urlFilms = new URL(filmURL), urlCines = new URL(cineURL);
+            String cineURL = "http://gencat.cat/llengua/cinema/cinemes.xml";
+            String filmURL = "http://gencat.cat/llengua/cinema/provacin.xml";
+            String cicloURL ="http://gencat.cat/llengua/cinema/cicles.xml";
+            URL urlFilms = new URL(filmURL), urlCines = new URL(cineURL), urlCiclos = new URL(cicloURL);
             films = JAXB.unmarshal(urlFilms, Films.class).filmList;
             cines = JAXB.unmarshal(urlCines, Cines.class).cineList;
+            ciclos = JAXB.unmarshal(urlCiclos, Ciclos.class).cicloList;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -72,9 +80,18 @@ public class SampleController implements Initializable {
         for (Cine c: cines) {
             nombreCines.add(c.getCinenom());
         }
+        for (Ciclo c: ciclos) {
+            nombreCiclos.add(c.getCiclenom());
+        }
 
         peliculasLista.setItems(nombrePelicula);
         cinesLista.setItems(nombreCines);
+        ciclosLista.setItems(nombreCiclos);
+
+        dataCharts = FXCollections.observableArrayList();
+        loadDataPieChart();
+        estadisticasAño.setData(dataCharts);
+        estadisticasAño.setLegendSide(Side.LEFT);
 
         projeccionsButton.setVisible(false);
     }
@@ -120,4 +137,32 @@ public class SampleController implements Initializable {
             }
         }
     }
+    @FXML
+    public void listCicloClick(MouseEvent mouseEvent) {
+        String s = ciclosLista.getSelectionModel().getSelectedItem();
+        for (Ciclo c : ciclos) {
+            if (c.getCiclenom().equals(s)) {
+                Image image = new Image("http://gencat.cat/llengua/cinema/"+c.getImgcicle());
+                imagenCiclo.setImage(image);
+                nombreCiclo.setText("Nombre: " + c.getCiclenom());
+                infoCiclo.setText("Información: " + c.getCicleinfo());
+            }
+        }
+    }
+
+    public void loadDataPieChart() {
+        List<Integer> años = films.stream()
+                .map(film -> film.getAny())
+                .filter(i -> i > 0 && i < 3000).distinct()
+                .sorted(Comparator.comparingInt(integer -> integer))
+                .collect(Collectors.toList());
+
+        for (Integer i: años) {
+            long numResultat= films.stream()
+                    .filter(film1 -> film1.getAny() == i)
+                    .count();
+            dataCharts.add(new PieChart.Data(i.toString(), numResultat));
+        }
+    }
+
 }

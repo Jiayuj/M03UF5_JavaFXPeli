@@ -10,6 +10,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Ciclos {
     @XmlElement(name = "CICLE")
+    public
     List<Ciclo> cicloList;
 
     @Override

@@ -10,8 +10,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Films{
     @XmlElement(name = "FILM")
-    public
-    List<Film> filmList;
+    public List<Film> filmList;
 
     @Override
     public String toString() {

@@ -6,42 +6,64 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.chart.PieChart?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SampleController">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <tabs>
-          <Tab text="Peli">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                         <ListView fx:id="peliculasLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listPeliClick" prefHeight="301.0" prefWidth="194.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
-                        <Text fx:id="titol" layoutX="389.0" layoutY="40.0" />
-                        <Text fx:id="original" layoutX="389.0" layoutY="55.0" />
-                        <Text fx:id="direccio" layoutX="389.0" layoutY="70.0" />
-                        <ImageView fx:id="imagenPeli" fitHeight="190.0" fitWidth="145.0" layoutX="228.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                        </ImageView>
-                        <Button fx:id="projeccionsButton" layoutX="239.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
-                     </children>
-              </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="cine">
-              <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                         <ListView fx:id="cinesLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listCineClick" prefHeight="281.0" prefWidth="309.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
-                         <Text fx:id="direccion" layoutX="366.0" layoutY="50.0" />
-                         <Text fx:id="localidad" layoutX="366.0" layoutY="90.0" />
-                         <Text fx:id="comarca" layoutX="366.0" layoutY="110.0" />
-                         <Text fx:id="provincia" layoutX="366.0" layoutY="130.0" />
-                     </children>
-                  </AnchorPane>
-              </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <tabs>
+               <Tab text="Peli">
+                   <content>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                               <ListView fx:id="peliculasLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listPeliClick" prefHeight="301.0" prefWidth="194.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                               <Text fx:id="titol" layoutX="389.0" layoutY="40.0" />
+                               <Text fx:id="original" layoutX="389.0" layoutY="55.0" />
+                               <Text fx:id="direccio" layoutX="389.0" layoutY="70.0" />
+                               <ImageView fx:id="imagenPeli" fitHeight="190.0" fitWidth="145.0" layoutX="228.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <viewport>
+                                       <Rectangle2D />
+                                   </viewport>
+                               </ImageView>
+                               <Button fx:id="projeccionsButton" layoutX="239.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#projeccionsClick" text="Projeccions" />
+                           </children>
+                       </AnchorPane>
+                   </content>
+               </Tab>
+               <Tab text="cine">
+                   <content>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                               <ListView fx:id="cinesLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listCineClick" prefHeight="281.0" prefWidth="309.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                               <Text fx:id="direccion" layoutX="366.0" layoutY="50.0" />
+                               <Text fx:id="localidad" layoutX="366.0" layoutY="90.0" />
+                               <Text fx:id="comarca" layoutX="366.0" layoutY="110.0" />
+                               <Text fx:id="provincia" layoutX="366.0" layoutY="130.0" />
+                           </children>
+                       </AnchorPane>
+                   </content>
+               </Tab>
+               <Tab text="ciclos">
+                   <content>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                               <ListView fx:id="ciclosLista" layoutX="200.0" layoutY="100.0" onMouseClicked="#listCicloClick" prefHeight="281.0" prefWidth="309.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                               <Text fx:id="nombreCiclo" layoutX="366.0" layoutY="252.0" />
+                               <Text fx:id="infoCiclo" layoutX="366.0" layoutY="284.0" wrappingWidth="600.0" />
+                               <ImageView fx:id="imagenCiclo" fitHeight="190.0" fitWidth="145.0" layoutX="366.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <viewport>
+                                       <Rectangle2D />
+                                   </viewport>
+                               </ImageView>
+                           </children>
+                       </AnchorPane>
+                   </content>
+               </Tab>
+               <Tab text="estadisticas">
+                   <content>
+                       <PieChart fx:id="estadisticasAño" title="Año Peliculas"/>
+                   </content>
+               </Tab>
+           </tabs>
+       </TabPane>
    </children>
 </AnchorPane>

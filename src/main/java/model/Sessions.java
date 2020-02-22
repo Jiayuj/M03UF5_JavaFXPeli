@@ -10,8 +10,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Sessions{
     @XmlElement(name = "SESSIONS")
-    public
-    List<Session> sessionList;
+    public List<Session> sessionList;
 
     @Override
     public String toString() {
