@@ -164,5 +164,4 @@ public class SampleController implements Initializable {
             dataCharts.add(new PieChart.Data(i.toString(), numResultat));
         }
     }
-
 }

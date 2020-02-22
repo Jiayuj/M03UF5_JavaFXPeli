@@ -47,8 +47,11 @@ public class ProjeccionsController extends SampleController {
         projeccionDataTable  = FXCollections.observableArrayList();
 
         CreaTable();
+        setprojeccionTable();
     }
+
     private void CreaTable() {
+
         TableColumn columna1 = new TableColumn("Titol");
         TableColumn columna2 = new TableColumn("Date");
         TableColumn columna3 = new TableColumn("Cinema");
@@ -64,7 +67,6 @@ public class ProjeccionsController extends SampleController {
         columna6.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("versio"));
 
         projeccionTable.getColumns().addAll(columna1,columna2,columna3,columna4,columna5,columna6);
-        setprojeccionTable();
     }
 
     private void setprojeccionTable() {
