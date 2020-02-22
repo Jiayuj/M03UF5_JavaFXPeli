@@ -11,12 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
@@ -26,8 +26,6 @@ import javax.xml.bind.JAXB;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,7 +38,7 @@ public class SampleController implements Initializable {
     private List<Ciclo> ciclos;
 
     private ObservableList<String> nombrePelicula, nombreCines,nombreCiclos;
-    private ObservableList<PieChart.Data> dataCharts;
+    private ObservableList<PieChart.Data> dataChartsYears, dataChartsCines;
 
     @FXML
     private ListView<String> peliculasLista, cinesLista,ciclosLista;
@@ -55,7 +53,7 @@ public class SampleController implements Initializable {
     @FXML
     private Button projeccionsButtonPeli, projeccionsButtonCine,projeccionsButtonCiclo;
     @FXML
-    private PieChart estadisticasAño;
+    private PieChart estadisticasAño, estadisticasCine;
 
     static int id;
     static String tapclick;
@@ -92,10 +90,14 @@ public class SampleController implements Initializable {
         cinesLista.setItems(nombreCines);
         ciclosLista.setItems(nombreCiclos);
 
-        dataCharts = FXCollections.observableArrayList();
+        dataChartsYears = FXCollections.observableArrayList();
         loadDataPieChart();
-        estadisticasAño.setData(dataCharts);
         estadisticasAño.setLegendSide(Side.LEFT);
+
+        dataChartsCines = FXCollections.observableArrayList();
+        loadDataPieChartCine();
+        estadisticasCine.setData(dataChartsCines);
+        estadisticasCine.setLegendSide(Side.LEFT);
 
         projeccionsButtonPeli.setVisible(false);
         projeccionsButtonCine.setVisible(false);
@@ -166,6 +168,9 @@ public class SampleController implements Initializable {
 
     }
 
+    @FXML
+    Pane panePelicula = new Pane(), paneCine = new Pane();
+
     public void loadDataPieChart() {
         List<Integer> años = films.stream()
                 .map(film -> film.getAny())
@@ -174,10 +179,59 @@ public class SampleController implements Initializable {
                 .collect(Collectors.toList());
 
         for (Integer i: años) {
-            long numResultat= films.stream()
+            long numResultat = films.stream()
                     .filter(film1 -> film1.getAny() == i)
                     .count();
-            dataCharts.add(new PieChart.Data(i.toString(), numResultat));
+            dataChartsYears.add(new PieChart.Data(i.toString(), numResultat));
         }
+
+        estadisticasAño.setData(dataChartsYears);
+
+        final Label label = new Label();
+        panePelicula.getChildren().add(label);
+        label.setFont(Font.font("SanSerif", FontWeight.BLACK, 20));
+
+        estadisticasAño.getData().stream().forEach(data -> {
+            data.getNode().addEventHandler(MouseEvent.ANY, e->{
+                int intValue = (int) data.getPieValue();
+                panePelicula.setVisible(true);
+                if(intValue==1){
+                    label.setText(intValue + " pelicula");
+                }else {
+                    label.setText(intValue + " peliculas");
+                }
+            });
+        });
+    }
+
+    public void loadDataPieChartCine() {
+        List<String> localidades = cines.stream()
+                .map(cine -> cine.getLocalitat())
+                .distinct()
+                .sorted(Comparator.comparing(String -> String))
+                .collect(Collectors.toList());
+
+        for (String i: localidades) {
+            long numResultat= cines.stream()
+                    .filter(cine1 -> cine1.getLocalitat() == i)
+                    .count();
+            dataChartsCines.add(new PieChart.Data(i, numResultat));
+        }
+
+        final Label label = new Label();
+        paneCine.getChildren().add(label);
+        label.setFont(Font.font("SanSerif", FontWeight.BLACK, 20));
+
+        estadisticasCine.getData().stream().forEach(data -> {
+            data.getNode().addEventHandler(MouseEvent.ANY, e->{
+                int intValue = (int) data.getPieValue();
+                paneCine.setVisible(true);
+                if(intValue==1){
+                    label.setText(intValue + " cine");
+                }else {
+                    label.setText(intValue + " cines");
+                }
+            });
+        });
     }
 }
