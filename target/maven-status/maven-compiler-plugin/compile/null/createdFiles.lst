@@ -1,3 +1,4 @@
-model/Sessions.class
-model/ProjeccionData.class
-model/Ciclos.class
+model\ProjeccionData.class
+model\Ciclos.class
+model\Sessions.class
+control\ProjeccionsController.class

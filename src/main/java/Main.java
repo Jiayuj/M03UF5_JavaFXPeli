@@ -30,17 +30,19 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
-
         stage.setTitle("App");
-        stage.setScene(new Scene(root, 500, 510));
+        stage.setScene(new Scene(root));
         stage.show();
 
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+    }
+
     public static void main(String[] args) {
         launch(args);
-
     }
 }
