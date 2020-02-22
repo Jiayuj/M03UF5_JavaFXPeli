@@ -40,7 +40,7 @@ public class ProjeccionsController extends SampleController {
     @FXML
     TableView projeccionTable;
     @FXML
-    Button back;
+    Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -78,14 +78,15 @@ public class ProjeccionsController extends SampleController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        switch (tapclick){
-            case "Cine":
+        switch (idTap){
+            case 0:
+                sessionsfiter = sessions.stream().filter(session -> session.getIdfilm() == id).collect(Collectors.toList());
+                System.out.println(id);
+                break;
+            case 1:
                 sessionsfiter = sessions.stream().filter(session -> session.getCineid() == id).collect(Collectors.toList());
                 break;
-            case "Peli":
-                 sessionsfiter = sessions.stream().filter(session -> session.getIdfilm() == id).collect(Collectors.toList());
-                break;
-            case "Ciclos":
+            case 2:
                 sessionsfiter = sessions.stream().filter(session -> session.getCicleid() == id).collect(Collectors.toList());
                 break;
             default:
@@ -108,7 +109,6 @@ public class ProjeccionsController extends SampleController {
     @FXML
     public void back(MouseEvent mouseEvent) {
         try {
-
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();

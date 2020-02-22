@@ -22,11 +22,6 @@ import java.util.List;
 
 public class Main extends Application {
 
-    static final String cicloURL ="http://gencat.cat/llengua/cinema/cicles.xml";
-    static List<Ciclo> ciclos;
-
-
-
     @Override
     public void start(Stage stage) throws IOException {
 
