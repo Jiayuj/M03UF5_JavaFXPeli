@@ -314,6 +314,9 @@ public class SampleController implements Initializable {
     }
 
     public void bus(ActionEvent actionEvent) {
+
+        // se para toda a minuscula despues saca titol real.
+
         String s = textFieldPelicula.getText().toLowerCase();
         Predicate<String> filter = Pattern
                 .compile("(.*)"+s+"(.*)")
