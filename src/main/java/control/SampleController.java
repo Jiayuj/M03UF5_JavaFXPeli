@@ -100,6 +100,7 @@ public class SampleController implements Initializable {
                     showCicloSelectDetail();
                     break;
                 case 3:
+                    showPeliList();
                     loadDataPieChart();
                     break;
                 case 4:
