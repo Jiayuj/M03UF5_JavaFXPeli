@@ -100,9 +100,12 @@ public class SampleController implements Initializable {
                     showCicloSelectDetail();
                     break;
                 case 3:
+                    //Esto es necesario para poder cargar los datos en el gráfico sin que pete en ningún momento.
+                    showPeliList();
                     loadDataPieChart();
                     break;
                 case 4:
+                    //Esto es necesario para poder cargar los datos en el gráfico sin que pete en ningún momento.
                     showCinelist();
                     loadDataPieChartCine();
                     break;
@@ -114,6 +117,7 @@ public class SampleController implements Initializable {
         }
     }
 
+    //Carga los datos, información, dentro del XML para poder mostrarlos posteriormente.
     private void showCiclosList() throws MalformedURLException {
         url = new URL("http://gencat.cat/llengua/cinema/cicles.xml");
         nombreCiclos.clear();
@@ -147,11 +151,13 @@ public class SampleController implements Initializable {
         cinesLista.getSelectionModel().select(idCineListSelect);
     }
 
+    //Muestra los detalles de las peliculas a clicar sobre estas.
     @FXML
     public void listPeliClick(MouseEvent arg0) {
         idPeliListSelect = peliculasLista.getSelectionModel().getSelectedIndex();
         showPeliSelectDetail();
     }
+
     private void showPeliSelectDetail() {
         for (Film f : films.stream().filter(l -> l.getTitol().equals(peliculasLista.getSelectionModel().getSelectedItem())).collect(Collectors.toList())) {
             Image image = new Image("http://gencat.cat/llengua/cinema/"+f.getCartell());
@@ -163,6 +169,7 @@ public class SampleController implements Initializable {
         }
     }
 
+    //Botón para entrar a las proyecciones de cada cine, pelicula o ciclo.
     @FXML
     public void projeccionsClick(MouseEvent arg0) {
         try {
@@ -176,6 +183,7 @@ public class SampleController implements Initializable {
         }
     }
 
+    //Muestra los detalles de los cines al clicar sobre estos.
     @FXML
     public void listCineClick(MouseEvent mouseEvent) {
         idCineListSelect = cinesLista.getSelectionModel().getSelectedIndex();
@@ -192,6 +200,7 @@ public class SampleController implements Initializable {
         }
     }
 
+    //Muestra los detalles de los ciclos al clicar sobre estos.
     @FXML
     public void listCicloClick(MouseEvent mouseEvent) {
         idCicloListSelect = ciclosLista.getSelectionModel().getSelectedIndex();
@@ -215,6 +224,7 @@ public class SampleController implements Initializable {
         }
     }
 
+    //Carga el gráfico (quesito) de cuantas peliculas hay por año y al pasar el ratón sobre una porción muestra la cantidad.
     public void loadDataPieChart() {
         dataChartsYears.clear();
         List<Integer> any = films.stream()
@@ -249,6 +259,7 @@ public class SampleController implements Initializable {
         });
     }
 
+    //Carga el gráfico (quesito) de cuantos cines hay por localidad y al pasar el ratón sobre una porción muestra la cantidad.
     public void loadDataPieChartCine() {
         dataChartsCines.clear();
         List<String> localidades = cines.stream()
