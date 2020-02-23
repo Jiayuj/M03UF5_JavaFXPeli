@@ -56,6 +56,8 @@ public class SampleController implements Initializable {
     private PieChart estadisticasAño, estadisticasCine;
     @FXML
     Pane panePelicula, paneCine;
+    @FXML
+    TextField textFieldPelicula;
 
     static int id,idTap,idPeliListSelect,idCineListSelect,idCicloListSelect;
     URL url;
@@ -138,6 +140,7 @@ public class SampleController implements Initializable {
         }
         peliculasLista.setItems(nombrePelicula);
         peliculasLista.getSelectionModel().select(idPeliListSelect);
+        panePelicula.getChildren().clear();
     }
 
     private void showCinelist() throws MalformedURLException {
@@ -149,6 +152,7 @@ public class SampleController implements Initializable {
         }
         cinesLista.setItems(nombreCines);
         cinesLista.getSelectionModel().select(idCineListSelect);
+        paneCine.getChildren().clear();
     }
 
     //Muestra los detalles de las peliculas a clicar sobre estas.
@@ -292,5 +296,24 @@ public class SampleController implements Initializable {
                 }
             });
         });
+    }
+
+    public void buscador(MouseEvent mouseEvent) {
+        nombrePelicula.clear();
+        peliculasLista.getItems().clear();
+        textFieldPelicula.setText("Busca una pelicula...");
+
+        String titulo = textFieldPelicula.getText().toLowerCase();
+
+        System.out.println("Has introducido: " + titulo);
+
+        List<String> listaTitle = films.stream().filter(film -> film.getTitol().toLowerCase().contains(titulo)).map(film -> film.getTitol()).collect(Collectors.toList());
+
+        System.out.println("Este es : " + listaTitle);
+        if(listaTitle.equals(titulo)) {
+            System.out.println("Encontrado " +titulo);
+        }
+            nombrePelicula.addAll(listaTitle);
+            peliculasLista.getItems().addAll(nombrePelicula);
     }
 }
