@@ -81,7 +81,6 @@ public class ProjeccionsController extends SampleController {
         switch (idTap){
             case 0:
                 sessionsfiter = sessions.stream().filter(session -> session.getIdfilm() == id).collect(Collectors.toList());
-                System.out.println(id);
                 break;
             case 1:
                 sessionsfiter = sessions.stream().filter(session -> session.getCineid() == id).collect(Collectors.toList());

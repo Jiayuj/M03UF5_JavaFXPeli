@@ -2,6 +2,7 @@ package control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +28,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SampleController implements Initializable {
@@ -37,21 +41,21 @@ public class SampleController implements Initializable {
     private List<Cine> cines;
     private List<Ciclo> ciclos;
 
-    private ObservableList<String> nombrePelicula, nombreCines,nombreCiclos;
+    private ObservableList<String> nombrePelicula, nombreCines, nombreCiclos;
     private ObservableList<PieChart.Data> dataChartsYears, dataChartsCines;
 
     @FXML
-    private ListView<String> peliculasLista, cinesLista,ciclosLista;
+    private ListView<String> peliculasLista, cinesLista, ciclosLista;
     @FXML
-    private ImageView imagenPeli,imagenCiclo;
+    private ImageView imagenPeli, imagenCiclo;
     @FXML
-    private Text titol,original,direccio;
+    private Text titol, original, direccio;
     @FXML
-    private Text direccion,localidad,comarca,provincia;
+    private Text direccion, localidad, comarca, provincia;
     @FXML
-    private Text nombreCiclo, infoCiclo,webCiclo;
+    private Text nombreCiclo, infoCiclo, webCiclo;
     @FXML
-    private Button projeccionsButtonPeli, projeccionsButtonCine,projeccionsButtonCiclo;
+    private Button projeccionsButtonPeli, projeccionsButtonCine, projeccionsButtonCiclo;
     @FXML
     private PieChart estadisticasAño, estadisticasCine;
     @FXML
@@ -59,14 +63,14 @@ public class SampleController implements Initializable {
     @FXML
     TextField textFieldPelicula;
 
-    static int id,idTap,idPeliListSelect,idCineListSelect,idCicloListSelect;
+    static int id, idTap, idPeliListSelect, idCineListSelect, idCicloListSelect;
     URL url;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nombrePelicula  = FXCollections.observableArrayList();
-        nombreCines  = FXCollections.observableArrayList();
-        nombreCiclos  = FXCollections.observableArrayList();
+        nombrePelicula = FXCollections.observableArrayList();
+        nombreCines = FXCollections.observableArrayList();
+        nombreCiclos = FXCollections.observableArrayList();
 
         dataChartsYears = FXCollections.observableArrayList();
         estadisticasAño.setLegendSide(Side.LEFT);
@@ -88,7 +92,7 @@ public class SampleController implements Initializable {
         try {
 
 
-            switch (idTap){
+            switch (idTap) {
                 case 0:
                     showPeliList();
                     showPeliSelectDetail();
@@ -124,7 +128,7 @@ public class SampleController implements Initializable {
         url = new URL("http://gencat.cat/llengua/cinema/cicles.xml");
         nombreCiclos.clear();
         ciclos = JAXB.unmarshal(url, Ciclos.class).cicloList;
-        for (Ciclo c: ciclos) {
+        for (Ciclo c : ciclos) {
             nombreCiclos.add(c.getCiclenom());
         }
         ciclosLista.setItems(nombreCiclos);
@@ -147,7 +151,7 @@ public class SampleController implements Initializable {
         url = new URL("http://gencat.cat/llengua/cinema/cinemes.xml");
         nombreCines.clear();
         cines = JAXB.unmarshal(url, Cines.class).cineList;
-        for (Cine c: cines) {
+        for (Cine c : cines) {
             nombreCines.add(c.getCinenom());
         }
         cinesLista.setItems(nombreCines);
@@ -164,12 +168,12 @@ public class SampleController implements Initializable {
 
     private void showPeliSelectDetail() {
         for (Film f : films.stream().filter(l -> l.getTitol().equals(peliculasLista.getSelectionModel().getSelectedItem())).collect(Collectors.toList())) {
-            Image image = new Image("http://gencat.cat/llengua/cinema/"+f.getCartell());
+            Image image = new Image("http://gencat.cat/llengua/cinema/" + f.getCartell());
             imagenPeli.setImage(image);
             titol.setText("Titol: " + f.getTitol());
             original.setText("Títol original: " + f.getOriginal());
             direccio.setText("Director: " + f.getDireccion());
-            id= f.getIdfilm();
+            id = f.getIdfilm();
         }
     }
 
@@ -200,7 +204,7 @@ public class SampleController implements Initializable {
             localidad.setText("Localidad:    " + c.getLocalitat());
             comarca.setText("Comarca:     " + c.getComarca());
             provincia.setText("Provincia:     " + c.getProvincia());
-            id= c.getCineid();
+            id = c.getCineid();
         }
     }
 
@@ -211,13 +215,14 @@ public class SampleController implements Initializable {
         showCicloSelectDetail();
 
     }
+
     private void showCicloSelectDetail() {
         for (Ciclo c : ciclos.stream().filter(l -> l.getCiclenom().equals(ciclosLista.getSelectionModel().getSelectedItem())).collect(Collectors.toList())) {
-            Image image = new Image("http://gencat.cat/llengua/cinema/"+c.getImgcicle());
+            Image image = new Image("http://gencat.cat/llengua/cinema/" + c.getImgcicle());
             imagenCiclo.setImage(image);
             nombreCiclo.setText("Nombre: " + c.getCiclenom());
             infoCiclo.setText("Información: " + c.getCicleinfo());
-            id= c.getCicleid();
+            id = c.getCicleid();
             if (c.getWeb() == null) {
                 webCiclo.setText("");
                 projeccionsButtonCiclo.setVisible(true);
@@ -237,7 +242,7 @@ public class SampleController implements Initializable {
                 .sorted(Comparator.comparingInt(integer -> integer))
                 .collect(Collectors.toList());
 
-        for (Integer i: any) {
+        for (Integer i : any) {
             long numResultat = films.stream()
                     .filter(film1 -> film1.getAny() == i)
                     .count();
@@ -251,12 +256,12 @@ public class SampleController implements Initializable {
         label.setFont(Font.font("SanSerif", FontWeight.BLACK, 20));
 
         estadisticasAño.getData().forEach(data -> {
-            data.getNode().addEventHandler(MouseEvent.ANY, e->{
+            data.getNode().addEventHandler(MouseEvent.ANY, e -> {
                 int intValue = (int) data.getPieValue();
                 panePelicula.setVisible(true);
-                if(intValue==1){
+                if (intValue == 1) {
                     label.setText(intValue + " pelicula");
-                }else {
+                } else {
                     label.setText(intValue + " peliculas");
                 }
             });
@@ -272,8 +277,8 @@ public class SampleController implements Initializable {
                 .sorted(Comparator.comparing(String -> String))
                 .collect(Collectors.toList());
 
-        for (String i: localidades) {
-            long numResultat= cines.stream()
+        for (String i : localidades) {
+            long numResultat = cines.stream()
                     .filter(cine1 -> cine1.getLocalitat().equals(i))
                     .count();
             dataChartsCines.add(new PieChart.Data(i, numResultat));
@@ -286,12 +291,12 @@ public class SampleController implements Initializable {
         label.setFont(Font.font("SanSerif", FontWeight.BLACK, 20));
 
         estadisticasCine.getData().forEach(data -> {
-            data.getNode().addEventHandler(MouseEvent.ANY, e->{
+            data.getNode().addEventHandler(MouseEvent.ANY, e -> {
                 int intValue = (int) data.getPieValue();
                 paneCine.setVisible(true);
-                if(intValue==1){
+                if (intValue == 1) {
                     label.setText(intValue + " cine");
-                }else {
+                } else {
                     label.setText(intValue + " cines");
                 }
             });
@@ -299,21 +304,32 @@ public class SampleController implements Initializable {
     }
 
     public void buscador(MouseEvent mouseEvent) {
-        nombrePelicula.clear();
         peliculasLista.getItems().clear();
-        textFieldPelicula.setText("Busca una pelicula...");
 
-        String titulo = textFieldPelicula.getText().toLowerCase();
-
-        System.out.println("Has introducido: " + titulo);
-
-        List<String> listaTitle = films.stream().filter(film -> film.getTitol().toLowerCase().contains(titulo)).map(film -> film.getTitol()).collect(Collectors.toList());
-
-        System.out.println("Este es : " + listaTitle);
-        if(listaTitle.equals(titulo)) {
-            System.out.println("Encontrado " +titulo);
+        for (Film f : films.stream()
+                        .filter(film -> film.getTitol().toLowerCase().equals(textFieldPelicula.getText().toLowerCase()))
+                        .collect(Collectors.toList())) {
+            peliculasLista.getItems().add(f.getTitol());
         }
-            nombrePelicula.addAll(listaTitle);
-            peliculasLista.getItems().addAll(nombrePelicula);
+    }
+
+    public void bus(ActionEvent actionEvent) {
+        String s = textFieldPelicula.getText().toLowerCase();
+        Predicate<String> filter = Pattern
+                .compile("(.*)"+s+"(.*)")
+                .asPredicate();
+
+        nombrePelicula.clear();
+        for (String buscapeli : films
+                .stream()
+                .map(f -> f.getTitol().toLowerCase())
+                .filter(filter)
+                .collect(Collectors.toList())) {
+            for (Film f : films.stream()
+                    .filter(film -> film.getTitol().toLowerCase().equals(buscapeli))
+                    .collect(Collectors.toList())) {
+                nombrePelicula.add(f.getTitol());
+            }
+        }
     }
 }
