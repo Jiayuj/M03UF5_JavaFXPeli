@@ -2,15 +2,15 @@ package control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -68,8 +68,9 @@ public class ProjeccionsController extends SampleController {
         columna6.setCellValueFactory(new PropertyValueFactory<ProjeccionData,String>("versio"));
 
         projeccionTable.getColumns().addAll(columna1,columna2,columna3,columna4,columna5,columna6);
-    }
 
+    }
+    // cojer datos de xml,  indicar tipo es peli , cine o ciclo,  final mosntra en datos en tabla
     private void setprojeccionTable() {
         try {
             String sessionURL = "http://www.gencat.cat/llengua/cinema/film_sessions.xml";
@@ -105,6 +106,7 @@ public class ProjeccionsController extends SampleController {
         projeccionTable.setItems(projeccionDataTable);
     }
 
+    //volver a inicior
     @FXML
     public void back(MouseEvent mouseEvent) {
         try {

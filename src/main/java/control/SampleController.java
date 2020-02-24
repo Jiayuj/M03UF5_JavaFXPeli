@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SampleController implements Initializable {
+
     @FXML
     TabPane tabPane;
 
@@ -81,6 +82,7 @@ public class SampleController implements Initializable {
         showTabPaneDetail();
 
         tabPane.getSelectionModel().select(idTap);
+
     }
 
     public void tabpaneClick(MouseEvent mouseEvent) {
@@ -90,8 +92,6 @@ public class SampleController implements Initializable {
 
     private void showTabPaneDetail() {
         try {
-
-
             switch (idTap) {
                 case 0:
                     showPeliList();
@@ -136,8 +136,8 @@ public class SampleController implements Initializable {
     }
 
     private void showPeliList() throws MalformedURLException {
-        url = new URL("http://gencat.cat/llengua/cinema/provacin.xml");
         nombrePelicula.clear();
+        url = new URL("http://gencat.cat/llengua/cinema/provacin.xml");
         films = JAXB.unmarshal(url, Films.class).filmList;
         for (Film f : films) {
             nombrePelicula.add(f.getTitol());
@@ -186,6 +186,7 @@ public class SampleController implements Initializable {
             Stage stage = (Stage) ((Node) arg0.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -303,11 +304,8 @@ public class SampleController implements Initializable {
         });
     }
 
-
+    // se para toda a minuscula despues saca titol real.
     public void bus(ActionEvent actionEvent) {
-
-        // se para toda a minuscula despues saca titol real.
-
         String s = textFieldPelicula.getText().toLowerCase();
         Predicate<String> filter = Pattern
                 .compile("(.*)"+s+"(.*)")
