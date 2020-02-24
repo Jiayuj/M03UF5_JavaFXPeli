@@ -1,4 +1,4 @@
-package model;
+package uf2.model;
 
 public class ProjeccionData {
 

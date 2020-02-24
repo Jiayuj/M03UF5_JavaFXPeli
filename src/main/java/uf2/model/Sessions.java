@@ -1,4 +1,4 @@
-package model;
+package uf2.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,13 +8,14 @@ import java.util.List;
 
 @XmlRootElement(name = "dataroot")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Cines {
-    @XmlElement(name = "CINEMES")
-    public List<Cine> cineList;
+public class Sessions{
+    @XmlElement(name = "SESSIONS")
+    public List<Session> sessionList;
+
     @Override
     public String toString() {
-        return "Cines{" +
-                "cineList=" + cineList +
+        return "Sessions{" +
+                "sessionList=" + sessionList +
                 '}';
     }
 }

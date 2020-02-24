@@ -1,4 +1,4 @@
-package control;
+package uf2.control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,20 +15,20 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
-import model.*;
+import uf2.model.*;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -181,7 +181,8 @@ public class SampleController implements Initializable {
     @FXML
     public void projeccionsClick(MouseEvent arg0) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("projeccions.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/projeccions.fxml"));
+            AnchorPane root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) arg0.getSource()).getScene().getWindow();
             stage.setScene(scene);

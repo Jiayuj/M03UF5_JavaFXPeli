@@ -1,22 +1,20 @@
-package control;
+package uf2.control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.ProjeccionData;
-import model.Session;
-import model.Sessions;
+import uf2.model.ProjeccionData;
+import uf2.model.Session;
+import uf2.model.Sessions;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;
@@ -110,11 +108,14 @@ public class ProjeccionsController extends SampleController {
     @FXML
     public void back(MouseEvent mouseEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/sample.fxml"));
+            AnchorPane root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
 
         } catch (IOException e) {
             e.printStackTrace();
