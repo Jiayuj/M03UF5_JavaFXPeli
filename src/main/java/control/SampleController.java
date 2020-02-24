@@ -303,15 +303,6 @@ public class SampleController implements Initializable {
         });
     }
 
-    public void buscador(MouseEvent mouseEvent) {
-        peliculasLista.getItems().clear();
-
-        for (Film f : films.stream()
-                        .filter(film -> film.getTitol().toLowerCase().equals(textFieldPelicula.getText().toLowerCase()))
-                        .collect(Collectors.toList())) {
-            peliculasLista.getItems().add(f.getTitol());
-        }
-    }
 
     public void bus(ActionEvent actionEvent) {
 
